@@ -1795,17 +1795,34 @@ void MainWidget::toggle_window_configuration() {
 	QWidget* main_window = get_top_level_widget(opengl_widget);
 
 	if (helper_opengl_widget->isVisible()) {
+
+		MAIN_WINDOW_SIZE[0] = size().width();
+		MAIN_WINDOW_SIZE[1] = size().height();
+		MAIN_WINDOW_MOVE[0] = pos().x();
+		MAIN_WINDOW_MOVE[1] = pos().y();
+		HELPER_WINDOW_SIZE[0] = helper_opengl_widget->size().width();
+		HELPER_WINDOW_SIZE[1] = helper_opengl_widget->size().height();
+		HELPER_WINDOW_MOVE[0] = helper_opengl_widget->pos().x();
+		HELPER_WINDOW_MOVE[1] = helper_opengl_widget->pos().y();
+
 		apply_window_params_for_one_window_mode();
+
 	}
 	else {
+
+		SINGLE_MAIN_WINDOW_SIZE[0] = size().width();
+		SINGLE_MAIN_WINDOW_SIZE[1] = size().height();
+		SINGLE_MAIN_WINDOW_MOVE[0] = pos().x();
+		SINGLE_MAIN_WINDOW_MOVE[1] = pos().y();
+
 		apply_window_params_for_two_window_mode();
+		
 		if (helper_window_overlaps_main_window()) {
 			helper_window->activateWindow();
 		}
 		else {
 			main_window->activateWindow();
 		}
-
 
 	}
 }
