@@ -1757,10 +1757,10 @@ void MainWidget::wheelEvent(QWheelEvent* wevent) {
 	}
 	if (is_shift_pressed) {
 		if (wevent->angleDelta().y() > 0) {
-			command = command_manager.get_command_with_name("move_left");
+			command = command_manager.get_command_with_name("previous_page");
 		}
 		if (wevent->angleDelta().y() < 0) {
-			command = command_manager.get_command_with_name("move_right");
+			command = command_manager.get_command_with_name("next_page");
 		}
 
 	}
@@ -2073,10 +2073,10 @@ void MainWidget::handle_command(const Command* command, int num_repeats) {
 	}
 
 	else if (command->name == "next_page") {
-		main_document_view->move_pages(1 + num_repeats);
+		main_document_view->move_pages(1);
 	}
 	else if (command->name == "previous_page") {
-		main_document_view->move_pages(-1 - num_repeats);
+		main_document_view->move_pages(-1);
 	}
 	else if (command->name == "next_chapter") {
 		main_document_view->goto_chapter(rp);
@@ -3090,7 +3090,7 @@ void MainWidget::apply_window_params_for_two_window_mode() {
 
 		helper_window->move(helper_window_move[0], helper_window_move[1]);
 		helper_window->resize(helper_window_size[0], helper_window_size[1]);
-		
+
 	}
 
 }
