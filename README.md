@@ -1,3 +1,58 @@
+# Modifications from original Sioyek repo
+
+- [0ce19d6](https://github.com/Elaws/sioyek/commit/0ce19d63f00716d1fd20d8c76d6baafbe6f0f573) 
+
+Windows positions/sizes are saved between each `toggle_window_configuration` command. Command to be defined in *keys_user.config*.
+
+- [c9b33ae](https://github.com/Elaws/sioyek/commit/c9b33ae3734b59d87e302c8b57dd73b64016682b)
+
+Added "- Sioyek" to window title (for compatibility with some AHK scripts that require software name in window title).
+
+- [f31250](https://github.com/Elaws/sioyek/commit/f3125067582fe1ab1bdfa713f903c206c319bdfd)
+
+`copy_window_size_config` command (*keys_user.config*) also saves windows positions/sizes to *prefs_user.config*, so that windows positions are remembered at Sioyek startup. First, following configuration must be added to *prefs_user.config* (customize with your screen's dimensions), then everything is automatic :
+
+\# Config when using a single window
+single_main_window_size 1920 1017
+single_main_window_move 0 0
+
+\# Config with helper window
+main_window_size 958 1008
+main_window_move 0 0
+helper_window_size 958 1008
+helper_window_move 960 0
+
+- [e23719](https://github.com/Elaws/sioyek/commit/e23719b61132d3d38253f2cae6b11b6fe45ba6ab)
+
+If windows positions are not yet configured in *prefs_user.config*, `toggle_window_configuration` defaults to splitting the screen in two to display helper window, instead of trying to launch it on the second monitor (which may fail under special circumstances if not other checks are made, as currently).
+
+- [5bccec](https://github.com/Elaws/sioyek/commit/5bcce4cec5c357a899ede3801129fbd273e7b97b)
+
+Fix (workaround) for helper window not recovering proper position when snapped.
+
+- [91c7ef](https://github.com/Elaws/sioyek/commit/91c7eff3794ac9f98ba3b86020af6f52cb9ab936)
+
+Maj + scroll now goes to next/previous page.
+
+- [b5fdb1](https://github.com/Elaws/sioyek/commit/b5fdb1646bacbbeddee708c3f4e7e0f7059139b0)
+
+Compatibility with Zotero's "open-pdf/[...]?page=i" links !
+
+- [e57d23](https://github.com/Elaws/sioyek/commit/e57d238dcf5614c6109bd605530e984c7171b0e5)
+
+Several custom color modes with `apply_custom_color` command (*keys_user.config*) : <S-c> (or any key combination of your choice) + `letter`. 26 commands (from a to z) so as many possible color modes ! Define color modes in *prefs_user.config* :
+
+## For scores (Yellow background / ochre text)
+custom_background_color_a    0.59 0.51 0.37
+custom_text_color_a    0.02 0.03 0.04
+
+## "A la" Sublime Text (Dark blue-ish background / white text)
+custom_background_color_b    0.20 0.24 0.27
+custom_text_color_b    0.85 0.87 0.91
+
+As with original Sioyek, wwitch between custom color mode and normal using `toggle_custom_color` command (*keys_user.config*).
+
+---
 # Sioyek
 
 Sioyek is a PDF viewer designed for reading research papers and technical books.
