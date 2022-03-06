@@ -3006,7 +3006,11 @@ void MainWidget::get_window_params_for_two_window_mode(int* main_window_size, in
 		int num_screens = QApplication::desktop()->numScreens();
 		int main_window_width = QApplication::desktop()->screenGeometry(0).width();
 		int main_window_height = QApplication::desktop()->screenGeometry(0).height();
-		if (num_screens > 1) {
+		
+		// If multiple monitors, just split screen in two by default. We should make test to know whether second monitor is
+		// to the left or to the right of main monitor. Otherwise, we may draw helper window off-screen.
+
+		/*if (num_screens > 1) {
 			int second_window_width = QApplication::desktop()->screenGeometry(1).width();
 			int second_window_height = QApplication::desktop()->screenGeometry(1).height();
 			main_window_size[0] = main_window_width;
@@ -3018,7 +3022,7 @@ void MainWidget::get_window_params_for_two_window_mode(int* main_window_size, in
 			helper_window_move[0] = main_window_width;
 			helper_window_move[1] = 0;
 		}
-		else {
+		else {*/
 			main_window_size[0] = main_window_width / 2;
 			main_window_size[1] = main_window_height;
 			main_window_move[0] = 0;
@@ -3027,7 +3031,7 @@ void MainWidget::get_window_params_for_two_window_mode(int* main_window_size, in
 			helper_window_size[1] = main_window_height;
 			helper_window_move[0] = main_window_width / 2;
 			helper_window_move[1] = 0;
-		}
+		//}
 	}
 }
 
