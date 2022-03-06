@@ -1009,10 +1009,10 @@ void MainWidget::open_document(const Path& path, std::optional<float> offset_x, 
 	if (has_document) {
 		//setWindowTitle(QString::fromStdWString(path.get_path()));
 		if (path.filename().has_value()) {
-			setWindowTitle(QString::fromStdWString(path.filename().value()));
+			setWindowTitle(QString::fromStdWString(path.filename().value() + L" - Sioyek"));
 		}
 		else {
-			setWindowTitle(QString::fromStdWString(path.get_path()));
+			setWindowTitle(QString::fromStdWString(path.get_path() + L" - Sioyek"));
 		}
 
 		push_state();
@@ -1816,7 +1816,7 @@ void MainWidget::toggle_window_configuration() {
 		SINGLE_MAIN_WINDOW_MOVE[1] = pos().y();
 
 		apply_window_params_for_two_window_mode();
-		
+
 		if (helper_window_overlaps_main_window()) {
 			helper_window->activateWindow();
 		}
