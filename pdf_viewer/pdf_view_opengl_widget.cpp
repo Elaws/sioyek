@@ -795,6 +795,9 @@ void PdfViewOpenGLWidget::search_text(const std::wstring& text, std::optional<st
 
 void PdfViewOpenGLWidget::set_dark_mode(bool mode) {
 	LOG("PdfViewOpenGLWidget::set_dark_mode");
+	PAGE_SEPARATOR_COLOR[0] = 0.9f;
+	PAGE_SEPARATOR_COLOR[1] = 0.9f;
+	PAGE_SEPARATOR_COLOR[2] = 0.9f;
 	if (mode == true) {
 		this->color_mode = ColorPalette::Dark;
 	}
@@ -1135,9 +1138,15 @@ void PdfViewOpenGLWidget::set_custom_color_mode(bool mode) {
 	LOG("PdfViewOpenGLWidget::set_custom_color_mode");
 	if (mode) {
 		this->color_mode = ColorPalette::Custom;
+		PAGE_SEPARATOR_COLOR[0] = CUSTOM_TEXT_COLOR[0];
+		PAGE_SEPARATOR_COLOR[1] = CUSTOM_TEXT_COLOR[1];
+		PAGE_SEPARATOR_COLOR[2] = CUSTOM_TEXT_COLOR[2];
 	}
 	else {
 		this->color_mode = ColorPalette::Normal;
+		PAGE_SEPARATOR_COLOR[0] = 0.9f;
+		PAGE_SEPARATOR_COLOR[1] = 0.9f;
+		PAGE_SEPARATOR_COLOR[2] = 0.9f;
 	}
 }
 
@@ -1157,7 +1166,7 @@ void PdfViewOpenGLWidget::choose_custom_color_mode(char choice) {
 	CUSTOM_TEXT_COLOR[1] = CUSTOM_TEXT_COLORS[(choice - 'a') * 3 + 1];
 	CUSTOM_TEXT_COLOR[2] = CUSTOM_TEXT_COLORS[(choice - 'a') * 3 + 2];
 
-	//toggle_custom_color_mode();
+	set_custom_color_mode((this->color_mode == ColorPalette::Custom));
 }
 
 void PdfViewOpenGLWidget::bind_program() {
