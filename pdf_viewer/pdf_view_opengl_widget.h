@@ -186,6 +186,7 @@ public:
 	void toggle_dark_mode();
 	void set_custom_color_mode(bool mode);
 	void toggle_custom_color_mode();
+	void choose_custom_color_mode(char choice);
 	void set_synctex_highlights(std::vector<std::pair<int, fz_rect>> highlights);
 	void on_document_view_reset();
 	void mouseMoveEvent(QMouseEvent* mouse_event) override;

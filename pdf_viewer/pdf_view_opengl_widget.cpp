@@ -13,6 +13,8 @@ extern bool SHOULD_DRAW_UNRENDERED_PAGES;
 extern float CUSTOM_BACKGROUND_COLOR[3];
 extern float CUSTOM_TEXT_COLOR[3];
 extern bool RERENDER_OVERVIEW;
+extern float CUSTOM_BACKGROUND_COLORS[26 * 3];
+extern float CUSTOM_TEXT_COLORS[26 * 3];
 extern float PAGE_SEPARATOR_WIDTH;
 extern float PAGE_SEPARATOR_COLOR[3];
 
@@ -321,6 +323,14 @@ PdfViewOpenGLWidget::PdfViewOpenGLWidget(DocumentView* document_view, PdfRendere
 	format.setVersion(3, 3);
 	format.setProfile(QSurfaceFormat::CoreProfile);
 	this->setFormat(format);
+
+	CUSTOM_BACKGROUND_COLOR[0] = CUSTOM_BACKGROUND_COLORS[0];
+	CUSTOM_BACKGROUND_COLOR[1] = CUSTOM_BACKGROUND_COLORS[1];
+	CUSTOM_BACKGROUND_COLOR[2] = CUSTOM_BACKGROUND_COLORS[2];
+
+	CUSTOM_TEXT_COLOR[0] = CUSTOM_TEXT_COLORS[0];
+	CUSTOM_TEXT_COLOR[1] = CUSTOM_TEXT_COLORS[1];
+	CUSTOM_TEXT_COLOR[2] = CUSTOM_TEXT_COLORS[2];
 }
 
 void PdfViewOpenGLWidget::cancel_search() {
@@ -1134,6 +1144,20 @@ void PdfViewOpenGLWidget::set_custom_color_mode(bool mode) {
 void PdfViewOpenGLWidget::toggle_custom_color_mode() {
 	LOG("PdfViewOpenGLWidget::toggle_custom_color_mode");
 	set_custom_color_mode(!(this->color_mode == ColorPalette::Custom));
+}
+
+void PdfViewOpenGLWidget::choose_custom_color_mode(char choice) {
+	LOG("PdfViewOpenGLWidget::choose_custom_color_mode");
+
+	CUSTOM_BACKGROUND_COLOR[0] = CUSTOM_BACKGROUND_COLORS[(choice - 'a') * 3 + 0];
+	CUSTOM_BACKGROUND_COLOR[1] = CUSTOM_BACKGROUND_COLORS[(choice - 'a') * 3 + 1];
+	CUSTOM_BACKGROUND_COLOR[2] = CUSTOM_BACKGROUND_COLORS[(choice - 'a') * 3 + 2];
+
+	CUSTOM_TEXT_COLOR[0] = CUSTOM_TEXT_COLORS[(choice - 'a') * 3 + 0];
+	CUSTOM_TEXT_COLOR[1] = CUSTOM_TEXT_COLORS[(choice - 'a') * 3 + 1];
+	CUSTOM_TEXT_COLOR[2] = CUSTOM_TEXT_COLORS[(choice - 'a') * 3 + 2];
+
+	//toggle_custom_color_mode();
 }
 
 void PdfViewOpenGLWidget::bind_program() {

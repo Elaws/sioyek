@@ -964,6 +964,12 @@ void MainWidget::handle_command_with_symbol(const Command* command, char symbol)
 			execute_command(EXECUTE_COMMANDS[symbol - 'a']);
 		}
 	}
+	else if (command->name == "apply_custom_color"){
+		if((symbol >= 'a') && (symbol <= 'z')){
+			this->opengl_widget->choose_custom_color_mode(symbol);
+			helper_opengl_widget->choose_custom_color_mode(symbol);
+		}
+	}
 	else if (command->name == "goto_mark") {
 		assert(main_document_view);
 
