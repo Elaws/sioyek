@@ -159,6 +159,7 @@ protected:
 	void toggle_two_window_mode();
 	void toggle_window_configuration();
 	void handle_command_types(const Command* command, int num_repeats);
+	void updateWindowsPositions();
 	void handle_link();
 	void handle_pending_text_command(std::wstring text);
 	void toggle_fullscreen();

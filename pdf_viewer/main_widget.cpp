@@ -1947,6 +1947,8 @@ void MainWidget::handle_command(const Command* command, int num_repeats) {
 			helper_window_size_h,
 			helper_window_move_x,
 			helper_window_move_y).toStdWString());
+
+			updateWindowsPositions();
 	}
 
 	if (command->name == "highlight_links") {
@@ -2502,6 +2504,73 @@ void MainWidget::handle_command(const Command* command, int num_repeats) {
 	}
 
 	validate_render();
+}
+
+// Todo : Append missing lines to prefs_user.config.
+void MainWidget::updateWindowsPositions() {
+
+	std::optional<Path> pref_file_path = config_manager->get_or_create_user_config_file();
+
+	if (pref_file_path) {
+
+		Path temp_file_path = pref_file_path.value().file_parent().slash(L"prefs_user_temp.config");
+		create_file_if_not_exists(temp_file_path.get_path());
+
+		std::wstring line;
+		std::wifstream input_file = open_wifstream(pref_file_path.value().get_path()); 
+		std::wofstream output_file = open_wofstream(temp_file_path.get_path());
+
+		float maVar = 0.45;
+
+		while (std::getline(input_file, line)) {
+
+			if (line.find(L"single_main_window_size") != std::string::npos) {
+				output_file << L"single_main_window_size " << SINGLE_MAIN_WINDOW_SIZE[0] << " " << SINGLE_MAIN_WINDOW_SIZE[1] << "\n";
+			}
+			else if (line.find(L"single_main_window_move") != std::string::npos) {
+				output_file << L"single_main_window_move " << SINGLE_MAIN_WINDOW_MOVE[0] << " " << SINGLE_MAIN_WINDOW_MOVE[1] << "\n";
+			}
+			else if (line.find(L"main_window_size") != std::string::npos) {
+				output_file << L"main_window_size " << MAIN_WINDOW_SIZE[0]  << " " << MAIN_WINDOW_SIZE[1] << "\n";
+			}
+			else if (line.find(L"main_window_move") != std::string::npos) {
+				output_file << L"main_window_move " << MAIN_WINDOW_MOVE[0]  << " " << MAIN_WINDOW_MOVE[1] << "\n";
+			}
+			else if (line.find(L"helper_window_size") != std::string::npos) {
+				output_file << L"helper_window_size " << HELPER_WINDOW_SIZE[0]  << " " << HELPER_WINDOW_SIZE[1] << "\n";
+			}
+			else if (line.find(L"helper_window_move") != std::string::npos) {
+				output_file << L"helper_window_move " << HELPER_WINDOW_MOVE[0] << " " << HELPER_WINDOW_MOVE[1] << "\n";
+			}
+			else if (line.find(L"# end") != std::string::npos) {
+				output_file << line;
+			}
+			else {
+				output_file << line << "\n";
+			}
+		}
+
+		input_file.close();
+		output_file.close();
+
+		std::wofstream overwritten_file = open_wofstream(pref_file_path.value().get_path());
+		std::wifstream source_file = open_wifstream(temp_file_path.get_path());
+
+		while (std::getline(source_file, line)) {
+
+			if (line.find(L"# end") != std::string::npos) {
+				overwritten_file << line;
+			}
+			else {
+				overwritten_file << line << "\n";
+			}
+
+		}
+
+		source_file.close();
+		overwritten_file.close();
+
+	}
 }
 
 void MainWidget::handle_link() {
