@@ -493,7 +493,13 @@ int main(int argc, char* args[]) {
 	main_widget.apply_window_params_for_one_window_mode();
 	main_widget.show();
 
-	main_widget.handle_args(app.arguments());
+	
+	// Here, to be able to modify the arguments, I needed to remove the "const" 
+	// in handle_args prototype argument. But in this case, can't pass the value as a non-lvalue,
+	// hence the following modification.
+	// --> "You can bind non-lvalues to const ref but not non-const ref"
+	QStringList arguments = app.arguments();
+	main_widget.handle_args(arguments);
 
 	// live reload the config file
 	QObject::connect(&pref_file_watcher, &QFileSystemWatcher::fileChanged, [&]() {

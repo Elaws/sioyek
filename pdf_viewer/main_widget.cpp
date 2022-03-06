@@ -791,13 +791,23 @@ void MainWidget::on_new_instance_message(qint32 instance_id, QByteArray argument
 //	}
 //}
 
-void MainWidget::handle_args(const QStringList& arguments) {
+void MainWidget::handle_args(QStringList& arguments) {
 	LOG("MainWidget::handle_args");
 	std::optional<int> page = -1;
 	std::optional<float> x_loc, y_loc;
 	std::optional<float> zoom_level;
 
 	//todo: handle out of bounds error
+
+	for (int i = 0; i < arguments.size(); ++i){
+            if(arguments[i].toStdString().find("page=") != std::string::npos){
+				page = arguments[i].mid(5).toInt()-1;
+				arguments.removeAt(i);
+				break;
+			} 
+	}
+
+	arguments.removeAll("/A");
 
 	QCommandLineParser* parser = get_command_line_parser();
 

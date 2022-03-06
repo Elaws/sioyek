@@ -206,7 +206,7 @@ public:
 	void toggle_dark_mode();
 	void do_synctex_forward_search(const Path& pdf_file_path,const Path& latex_file_path, int line);
 	void on_new_instance_message(qint32 instance_id, QByteArray arguments);
-	void handle_args(const QStringList &arguments);
+	void handle_args(QStringList &arguments);
 	void update_link_with_opened_book_state(Link lnk, const OpenedBookState& new_state);
 	void update_closest_link_with_opened_book_state(const OpenedBookState& new_state);
 	void set_current_widget(QWidget* new_widget);
