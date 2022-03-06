@@ -3082,9 +3082,15 @@ void MainWidget::apply_window_params_for_two_window_mode() {
 	}
 
 	if (helper_opengl_widget != nullptr) {
+
+		helper_window->move(helper_window_move[0] + 1, helper_window_move[1] + 1);
+		helper_window->resize(helper_window_size[0] + 1, helper_window_size[1] + 1);
+
+		helper_window->show();
+
 		helper_window->move(helper_window_move[0], helper_window_move[1]);
 		helper_window->resize(helper_window_size[0], helper_window_size[1]);
-		helper_window->show();
+		
 	}
 
 }
